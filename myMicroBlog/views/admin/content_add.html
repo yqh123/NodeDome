@@ -1,0 +1,73 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+
+<ol class="breadcrumb">
+    <li><a href="/admin/content">内容管理</a></li>
+    <li><span>内容添加</span></li>
+</ol>
+
+<h3>内容添加</h3>
+
+<form role="form" method="post" id="contentForm">
+    <div class="form-group">
+        <label for="title">分类：</label>
+        <select name="category" id="category" class="form-control" style="width: 200px;">
+            {%for item in categories%}
+            <option value="{{item.id}}">{{item.name}}</option>
+            {%endfor%}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="title">标题：</label>
+        <input type="text" class="form-control" id="title" required placeholder="请输入内容标题" name="title">
+    </div>
+
+    <div class="form-group">
+        <label for="description">简介：</label>
+        <textarea name="description" id="description" class="form-control" required rows="5" placeholder="请输入内容简介"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="content">内容：</label>
+        <textarea name="content" id="content" class="form-control" required rows="10" placeholder="请输入内容"></textarea>
+    </div>
+
+    <button type="submit" value="submit" class="btn btn-primary" id="admin-submit">提交</button>
+</form>
+
+<!--内容不为空弹窗提示-->
+<div class="modal fade bs-example-modal-sm" id="myModal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body">
+                <p>博客分类、标题、简介、内容都不能为空</p>
+                <p>如果没有分类选项，请添加分类信息</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var oForm = document.getElementById('contentForm');
+    var values = oForm.elements;
+    oForm.onsubmit = function(event){
+        var event = event || window.event;
+        for(var i = 0, len = values.length; i < len; i++){
+            if(!values[i].value.trim()){
+                $('#myModal').modal('show');
+                event.preventDefault();
+                break;
+            }
+        }
+    }
+</script>
+
+{% endblock %}

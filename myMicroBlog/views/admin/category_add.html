@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+
+<ol class="breadcrumb">
+    <li><a href="/admin/category">分类管理</a></li>
+    <li><span>添加分类</span></li>
+</ol>
+
+<h3>分类添加</h3>
+
+<form role="form" method="post">
+    <div class="form-group">
+        <label for="name">分类名称：</label>
+        <input type="text" required class="form-control" id="name" placeholder="请输入分类名称" name="name">
+    </div>
+    <button type="submit" class="btn btn-primary" id="admin-submit" disabled="disabled">提交</button>
+</form>
+
+<script>
+    var addSubmit = document.getElementById('admin-submit');
+    var oName = document.getElementById('name');
+    oName.oninput = function(event){
+        var val = this.value.trim();
+        if(val){
+            addSubmit.removeAttribute('disabled')
+        }else{
+            addSubmit.setAttribute('disabled', false)
+        }
+    };
+</script>
+
+{% endblock %}

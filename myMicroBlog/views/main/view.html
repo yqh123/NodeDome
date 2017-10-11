@@ -1,0 +1,65 @@
+{% extends 'public.html' %}
+
+{% block content %}
+    <div class="listBox">
+        <h1>{{contents.title}}</h1>
+        <p class="colDefault">
+            作者：<span class="cloInof">{{contents.user.username}}</span>&nbsp;&nbsp;&nbsp;
+            <!--时间：<span class="cloInof">{{contents.addTime|date('Y年m月d日 H:i:s', -8*60)}}</span>-->
+            阅读量：<span class="cloInof">{{contents.views}}</span>&nbsp;&nbsp;&nbsp;
+            评论：<span class="cloInof cloInofPL">{{contents.comments.length}}</span>&nbsp;&nbsp;&nbsp;
+        </p>
+        <dfn>{{contents.content}}</dfn>
+    </div>
+    <div class="listBox message">
+        <h3 class="textLeft"><strong>发表个人评论</strong> <span class="em">一共有 <em id="messageCount">{{contents.comments.length}}</em> 条评论</span></h3>
+
+        {% if userInfo._id %}
+        <p class="textLeft">{{userInfo.username}}</p>
+        <p class="textLeft clear">
+            <textarea id="messageContent" style="height: 70px;"></textarea>
+            <input type="hidden" id="contentId" value="{{contents.id}}">
+            <button id="messageBtn" class="submit">提交</button>
+        </p>
+        {%else%}
+        <p class="bgDanger" style="line-height:30px;">你还没有登录，请先登录！</p>
+        {%endif%}
+
+        {% if contents.comments.length %}
+        <!--分页-->
+        <div class="pager">
+            <ul class="clear">
+                <li class="previous">
+                    <a href="javascript:;">上一页</a>
+                </li>
+                <li class="pages"></li>
+                <li class="next">
+                    <a href="javascript:;">下一页</a>
+                </li>
+            </ul>
+        </div>
+        <!--评论列表-->
+        <div class="messageList"></div>
+        {% else %}
+        <div class="alert alert-warning" role="alert" style="width: 657px;">暂无评论内容，如果你有好的意见或建议，可以随时发表你的评论!</div>
+        {% endif %}
+
+    </div>
+
+    <!--评论内容为空时的弹出框-->
+    <div class="modal fade bs-example-modal-sm" id="myModalContent">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">个人博客提示消息：</h4>
+                </div>
+                <div class="modal-body"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/public/js/comment.js"></script>
+{% endblock %}

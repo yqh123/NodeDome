@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+
+<ol class="breadcrumb">
+    <li><a href="/admin/category">分类管理</a></li>
+    <li><span>分类编辑</span></li>
+</ol>
+
+<h3>要修改的分类名称 - {{category.name}}</h3>
+<p>如果你不想修改了请点击： <a href="javascript:window.history.back();">返回上一步</a></p>
+<form role="form" method="post">
+    <div class="form-group">
+        <label for="name">修改后的名称：</label>
+        <input type="text" value="" class="form-control" id="name" placeholder="请输入分类名称" name="name">
+    </div>
+    <button type="submit" class="btn btn-primary" id="admin-submit" disabled="disabled">提交</button>
+</form>
+
+<script>
+    var addSubmit = document.getElementById('admin-submit');
+    var oName = document.getElementById('name');
+    oName.oninput = function(event){
+        var val = this.value.trim();
+        if(val){
+            addSubmit.removeAttribute('disabled')
+        }else{
+            addSubmit.setAttribute('disabled', false)
+        }
+    };
+</script>
+
+{% endblock %}

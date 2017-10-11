@@ -1,0 +1,57 @@
+
+
+
+{% extends 'public.html' %}
+
+{% block content %}
+
+    {% if contents.length %}
+    {% for item in contents %}
+    <div class="listBox">
+        <h1>{{item.title}}</h1>
+        <p class="colDefault">
+            作者：<span class="colInfo">{{item.user.username}}</span>&nbsp;&nbsp;&nbsp;
+            <!--时间：<span class="colInfo">{{item.addTime|date('Y年m月d日 H:i:s', -8*60)}}</span> - -->
+            阅读量：<span class="colInfo">{{item.views}}</span>&nbsp;&nbsp;&nbsp;
+            评论数：<span class="colInfo">{{item.comments.length}}</span>&nbsp;&nbsp;&nbsp;
+        </p>
+        <dfn><p>简介：{{item.description}}</p></dfn>
+        <div class="function"><a href="/view/?contentid={{item.id}}">阅读全文</a></div>
+    </div>
+    {% endfor %}
+    {% include './page.html' %}
+    {% else %}
+    <div class="listBox">
+        <p>暂无博客内容，敬请期待！</p>
+    </div>
+    {% endif %}
+
+    <!--首页弹出模态框 先判断用户cookie值是否存在-->
+    {% if userInfo._id %}
+    {% else %}
+    <div class="modal fade bs-example-modal-lg" id="myModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">个人博客提示消息：</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <p>你好，欢迎进入我的博客！</p>
+                        <p style="color:red;">请先简单注册登录后再查看博客里面的内容信息，谢谢!</p>
+                        <p>该博客记录了一些关于HTML、css、js、javascript、vue、react的随行笔记</p>
+                        <p>该博客采用bootstrap做页面布局和样式处理，使用javascript编写HTML页面交互程序；使用NodeJs搭建整个web应用</p>
+                        <P>采用Mongodb作为数据库,使用mongoose模块实现对数据库的增、删、改、查</P>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

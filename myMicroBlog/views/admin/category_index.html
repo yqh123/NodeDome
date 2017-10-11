@@ -1,0 +1,65 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+
+<ol class="breadcrumb">
+    <li><a href="/admin/category">分类管理</a></li>
+    <li><span>分类列表</span></li>
+</ol>
+
+<h3>分类列表</h3>
+
+{% if users.length %}
+<table class="table table-hover table-striped">
+    <tr>
+        <th>ID</th>
+        <th>分类名称</th>
+        <th>操作</th>
+    </tr>
+    {% for item in users %}
+    <tr>
+        <td>{{item._id.toString()}}</td>
+        <td>{{item.name}}</td>
+        <td>
+            <a href="/admin/category/edit?id={{item._id.toString()}}" class="btn btn-primary btn-sm">修改</a>
+            <button type="button" class="btn btn-danger btn-sm deleteBtn" data-toggle="modal" dataname="{{item.name}}" dataid="/admin/category/delete?id={{item._id.toString()}}" data-target="#myModal" data-whatever="@mdo">删除</button>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<!--点击删除按钮的弹出框-->
+<div class="modal fade bs-example-modal-sm" id="myModal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">是否确认删除？</h4>
+            </div>
+            <div class="modal-body">你要删除的分类为：</div>
+            <div class="modal-footer" style="text-align:center;">
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="margin: 0 20px;">取消</button>
+                <a href="/admin/category/delete?id={{item._id.toString()}}" id="deleteid" class="btn btn-primary" style="margin: 0 20px;">确认</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% else %}
+<div class="alert alert-info" role="alert">暂无分类信息,请前往 "分类管理" 下面的 "添加分类" 页面添加新分类！</div>
+{% endif %}
+
+<script>
+    $('#myModal').on('show.bs.modal',function(event){
+        var modal = $(this);
+        var button = $(event.relatedTarget)
+        var dataname = button.attr('dataname');
+        var hrefid = button.attr('dataid');
+        modal.find('#deleteid').attr('href',hrefid);
+        modal.find('.modal-body').text('你要删除的分类为： ' + dataname)
+    })
+</script>
+
+{% endblock %}

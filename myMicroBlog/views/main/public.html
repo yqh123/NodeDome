@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YQH博客</title>
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/main.css">
+    <link rel="stylesheet" href="/public/fontAwesome/css/font-awesome.min.css">
+    <script src="/public/js/jquery-1.12.4.min.js"></script>
+    <script src="/public/js/bootstrap.min.js"></script>
+    <script src="/public/js/public.js"></script>
+    <script src="/public/js/index.js"></script>
+</head>
+<body>
+    <header class="header" id="header">
+        <div class="backimg"><img src="/public/images/IMG_0293.jpg"></div>
+        <div class="logo">
+            <i></i>
+            <img src="/public/images/00002637.png" alt="">
+        </div>
+    </header>
+
+    <nav id="nav">
+        <div class="menu" id="menuTab">
+            {% if categoryid=='' %}
+            <a href="/" class="focus">首页</a>
+            {% else %}
+            <a href="/" class="">首页</a>
+            {% endif %}
+
+            {% for item in categories %}
+
+                {% if categoryid==item.id %}
+                <a href="/?category={{item._id.toString()}}" class="focus">{{item.name}}</a>
+                {% else %}
+                <a href="/?category={{item._id.toString()}}" class="">{{item.name}}</a>
+                {% endif %}
+
+            {% endfor %}
+        </div>
+    </nav>
+
+    <main class="clear" id="content">
+        <div class="mainLeft">
+            {%block content%}{%endblock%}
+        </div>
+
+        <div class="mainRight">
+            {% if userInfo._id %}
+            <div class="rightBox" id="userInfo">
+                <div class="title"><span>个人信息</span></div>
+                <p><span class="colDark userName">{{userInfo.username}}</span></p>
+                {% if userInfo.isAdmin %}
+                <p class="text">
+                    <span class="colDanger">你好，管理员！</span>
+                    <a href="/admin">进入管理后台</a>
+                </p>
+                {% else %}
+                <p><span class="colDanger">你好，欢迎光临我的博客！</span></p>
+                {% endif %}
+                <p><button type="button" class="btn btn-ms" data-toggle="modal" data-target="#myReturn" data-whatever="@mdo">退出登录</button></p>
+            </div>
+            {% else %}
+            <div class="rightBox" id="loginBox">
+                <div class="title"><span>登录</span></div>
+                <div class="line"><span class="colDark">用户名：</span><input type="text" name="username" /><em></em></div>
+                <div class="line"><span class="colDark">密码：</span><input type="password" name="password"><em></em></div>
+                <div class="line"><span class="colDark"></span>
+                    <button>登 录</button>
+                </div>
+                <p class="textRight">还没注册？<a href="javascript:;" class="colMint">马上注册</a></p>
+                <p class="colWarning textCenter"></p>
+            </div>
+
+            <div class="rightBox" id="registerBox" style="display:none;">
+                <div class="title"><span>注册</span></div>
+                <div class="line"><span class="colDark">用户名：</span><input type="text" name="username"></div>
+                <div class="line"><span class="colDark">密码：</span><input type="password" name="password"></div>
+                <div class="line"><span class="colDark">确认：</span><input type="password" name="repassword"></div>
+                <div class="line">
+                    <span class="colDark"></span>
+                    <button>注 册</button>
+                </div>
+                <p class="textRight">已有账号？<a href="javascript:;" class="colMint">马上登录</a></p>
+                <p class="colWarning textCenter"></p>
+            </div>
+            {% endif %}
+
+            <div class="rightBox">
+                <div class="title"><span>重要提示：</span></div>
+                <P>普通用户无法登录管理员后台</P>
+                <P>管理员账号和密码请电话联系：<a href="javascript:;">13786140206</a></P>
+            </div>
+        </div>
+    </main>
+
+    <div class="copyright textCenter" id="copyright" style="margin-top:20px;">
+        <p>你好，欢迎进入我的博客！</p>
+    </div>
+
+    <!-- 注册或登录成功后显示弹出框提示 -->
+    <div class="modal fade bs-example-modal-sm in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="myDialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="mySmallModalLabel">提示信息：</h4>
+                </div>
+                <div class="modal-body" id="modal-body"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 点击退出后显示弹出框提示 -->
+    <div class="modal fade bs-example-modal-sm" id="myReturn">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">是否确认退出</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnRequire">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

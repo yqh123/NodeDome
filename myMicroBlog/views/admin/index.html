@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+<div class="jumbotron">
+    <h1>Hello, {{userInfo.username}}!</h1>
+    <p>欢迎进入我的博客后台管理！</p>
+    <p>你可以在用户管理、分类管理、内容管理模块里面对当前博客进行分类和博客内容等信息的编辑，并同步到mongoose数据库中！</p>
+    <p><a class="btn btn-primary btn-lg" href="/" role="button">返回首页</a></p>
+</div>
+{% endblock %}

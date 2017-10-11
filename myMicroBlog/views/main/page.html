@@ -1,0 +1,34 @@
+
+<div style="text-align:center;">
+    <nav aria-label="..." style="border: 0;">
+        <ul class="pagination">
+
+            {% if page<=1 %}
+            <li class="disabled"><a href="javascript:;" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+            {% else %}
+            <li><a href="/{{paths}}?page={{page-1}}&category={{categoryid}}" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+            {% endif %}
+
+            {% for key,val in usersArray %}
+            {% if page==loop.index %}
+            <li class="active"><a href="/{{paths}}?page={{loop.index}}&category={{categoryid}}">{{loop.index}}</a></li>
+            {% else %}
+            <li><a href="/{{paths}}?page={{loop.index}}&category={{categoryid}}">{{loop.index}}</a></li>
+            {% endif %}
+            {% endfor %}
+
+            {% if page>=pages %}
+            <li class="disabled"><a href="javascript:;" aria-label="Previous"><span aria-hidden="true">»</span></a></li>
+            {% else %}
+            <li><a href="/{{paths}}?page={{page+1}}&category={{categoryid}}" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+            {% endif %}
+
+        </ul>
+    </nav>
+</div>
+
+<nav style="border: 0;">
+    <ul class="pager" style="padding:10px;">
+        <div> 一共有 {{count}} 条数据，每页最多显示 {{limit}} 条数据，一共 {{pages}} 页，当前第 {{page}} 页</div>
+    </ul>
+</nav>
